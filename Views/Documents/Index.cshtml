@@ -1,0 +1,45 @@
+@model IEnumerable<DocuIns.Models.Documents.Document>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <link rel="stylesheet" href="css/ViewAllDocument.css">
+    <div>
+        @foreach (var item in Model)
+        {
+            <div class="card-container" asp-action="Details" asp-route-id="@item.Id">
+                <a href="/" class="hero-image-container">
+                    <img class="hero-image" src="/images/document-automation-hero.png"
+                        alt="Spinning glass cube" />
+                </a>
+                <main class="main-content">
+                    <h3><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a></h3>
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                </main>
+                <div class="card-attribute">
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+
+</html>
+@*
+<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+<a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@

@@ -1,0 +1,179 @@
+@model DocuIns.Models.Documents.Document
+
+@{
+    ViewData["Title"] = @Html.DisplayNameFor(model => model.Name);
+    var path = Model.Path?.ToString();
+    var extension = System.IO.Path.GetExtension(path);
+}
+
+<link rel="stylesheet" href="/css/Document.css" />
+<div class="main-container">
+    <div class="left-side">
+        <div class="pdf-container">
+            @if (extension != null && extension.ToLower() == ".txt")
+            {
+                <iframe src="@Html.DisplayFor(model => model.Path)" class="pdf-frame" height="300" width="20%"></iframe>
+            }
+            else
+            {
+                <object data="@Html.DisplayFor(model => model.Path)" type="application/pdf" class="pdf-frame" height="300"
+                    width="20%">
+                </object>
+            }
+        </div>
+    </div>
+    <div class="right-side">
+        <button id="copyButton" onclick="copyMessage()">Copy Message</button>
+        <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+                <!-- This is where chat messages will be displayed -->
+            </div>
+            <div class="chat-input">
+                <!-- Input field for typing messages -->
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById("send-button").addEventListener("click", async function () {
+        const messageInput = document.getElementById("message-input");
+        const message = messageInput.value.trim();
+
+        if (message !== "") {
+            const chatMessages = document.getElementById("chat-messages");
+
+            // Add user message to the chat interface
+            const userMessageElement = document.createElement("div");
+            userMessageElement.classList.add("message", "user");
+            userMessageElement.textContent = "User : " + message;
+            chatMessages.appendChild(userMessageElement);
+
+            // Send the message to your API and get the response
+            try {
+                const response = await sendMessageToAPI(message); // Call your API function here
+
+                // Display the response as a chat message
+                addBotMessageToChat(response, chatMessages);
+            } catch (error) {
+                console.error("Error:", error);
+            }
+
+            // Clear the input field after sending the message
+            messageInput.value = "";
+        }
+    });
+
+    function copyMessage() {
+        const message = "http://localhost:3000/chatbot/78c0b763-6fea-4e08-a9dd-5e0e1ed933f3"; // Your message here
+        navigator.clipboard.writeText(message)
+            .then(() => {
+                alert("Link Copied");
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    }
+
+    // Function to add bot message to chat
+    function addBotMessageToChat(response, chatMessages) {
+        const botMessageElement = document.createElement("div");
+        botMessageElement.classList.add("message", "bot");
+        botMessageElement.textContent = "Bot " + response; // Assuming the response is text
+        chatMessages.appendChild(botMessageElement);
+    }
+
+    // Function to send message to your API (replace this with your API call)
+    async function sendMessageToAPI(message) {
+        try {
+            const response = await query({
+                "question": message,
+                "overrideConfig": {
+                    "url": "https://d1bj1bc7hxixa3.cloudfront.net/Untitled.txt"
+                }
+            });
+            console.log("API response:", response);
+            return response;
+        } catch (error) {
+            console.error("Error querying API:", error);
+            throw error;
+        }
+    }
+
+    async function query(data) {
+        const response = await fetch(
+            "http://localhost:3000/api/v1/prediction/0fae1c12-cd32-4f22-94a4-20f5e0008d86",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+        const result = await response.json();
+        return result['text'];
+    }
+
+</script>
+
+@* <div>
+<h4>Document</h4>
+<hr />
+<dl class="row">
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.Name)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.Name)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.Description)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.Description)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.Path)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.Path)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.Status)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.Status)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.Tag)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.Tag)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.CreatedDate)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.CreatedDate)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.ModifiedDate)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.ModifiedDate)
+</dd>
+<dt class = "col-sm-2">
+@Html.DisplayNameFor(model => model.User)
+</dt>
+<dd class = "col-sm-10">
+@Html.DisplayFor(model => model.User.Id)
+</dd>
+</dl>
+</div>
+<div>
+<a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+<a asp-action="Index">Back to List</a>
+</div> *@

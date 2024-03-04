@@ -1,0 +1,115 @@
+/* Reset default margin and padding */
+/* 
+=========================
+Fonts
+=========================
+
+font-family: 'Outfit', sans-serif;
+
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+
+/* 
+========================
+Variables
+========================
+*/
+
+
+:root {
+    
+    font-size: 15px;
+    
+    /* Primary */
+    --var-soft-blue: hsl(215, 51%, 70%);
+    --var-cyan: hsl(178, 100%, 50%);
+    /* Neutral */
+    --var-main-darkest: hsl(217, 54%, 11%);
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+    
+    /* Fonts */
+    
+    --var-heading: normal normal 600 1.1em/1.2em 'Outfit', sans-serif; /* Decreased heading font size */
+    --var-small-heading: normal normal 400 0.9em/1em 'Outfit', sans-serif;
+    --var-para: normal normal 300 0.9em/1.45em 'Outfit', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-size: 15px;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--var-lightest);
+    color: var(--var-main-darkest);
+}
+
+/* Heading styles */
+h4 {
+    font: var(--var-heading);
+    color: var(--var-main-darkest);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--var-line-dark);
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--var-soft-blue);
+    border-radius: 4px;
+    background-color: var(--var-lightest);
+    color: var(--var-main-darkest);
+    font: var(--var-para);
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--var-cyan);
+}
+
+input[type="submit"] {
+    background-color: var(--var-cyan);
+    color: var(--var-lightest);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: darken(var(--var-cyan), 10%);
+}
+
+a {
+    color: var(--var-cyan);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,215 @@
+/* 
+=========================
+Fonts
+=========================
+
+font-family: 'Outfit', sans-serif;
+
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap');
+
+/* 
+========================
+Variables
+========================
+*/
+
+
+:root {
+    
+    font-size: 15px;
+    
+    /* Primary */
+    --var-soft-blue: hsl(215, 51%, 70%);
+    --var-cyan: hsl(178, 100%, 50%);
+    /* Neutral */
+    --var-main-darkest: hsl(217, 54%, 11%);
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+    
+    /* Fonts */
+    
+    --var-heading: normal normal 600 1.1em/1.2em 'Outfit', sans-serif; /* Decreased heading font size */
+    --var-small-heading: normal normal 400 0.9em/1em 'Outfit', sans-serif;
+    --var-para: normal normal 300 0.9em/1.45em 'Outfit', sans-serif;
+}
+
+/* 
+=======================
+Setup
+=======================
+*/
+
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+img {
+    max-width: 100%; /* Adjust the maximum width of images */
+    border-radius: 10px; /* Reduced border radius for images */
+    display: block;
+}
+
+a {
+    color: inherit;
+}
+
+/* 
+
+Eye view
+
+https://i.postimg.cc/9MtT4GZY/view.png' border='0' alt='view */
+
+/*
+=========================
+Font Styling
+=========================
+*/
+
+h3 {
+    font: var(--var-heading);
+    color: var(--var-lightest);
+    padding: 0 0; /* Adjusted padding */
+}
+
+h4 {
+    font: var(--var-small-heading);
+    color: var(--var-lightest);
+}
+
+p {
+    font: var(--var-para);
+    color: var(--var-soft-blue);
+}
+
+span {
+    color: white;
+}
+/* 
+=====================
+Classes
+=====================
+*/
+
+/* LAYOUT */
+
+.card-container {
+    /* Adjusted styling for better card layout */
+    width: calc(33.33% - 25px); /* Adjusted width to consider margins */
+    margin: 10px; /* Adjust margins between cards */
+    background-color: var(--var-card-dark);
+    border-radius: 15px;
+    padding: 2rem;
+    box-sizing: border-box; /* Include padding in the width calculation */
+    display: inline-block; /* Ensure inline-block display for side-by-side arrangement */
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        width: calc(50% - 20px); /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-container {
+        width: calc(100% - 20px); /* Full width for smaller devices */
+    }
+}
+
+div.flex-row {
+    text-align: center; /* Center-align to avoid default stacking behavior */
+}
+
+div.coin-base, .time-left, .card-attribute {
+    display: flex;
+    align-items: center;
+    padding: 0.7em 0;
+}
+
+.card-attribute {
+    padding-bottom: 0em;
+    border-top: 2px solid var(--var-line-dark);
+}
+
+a.hero-image-container {
+    position: relative;
+    display: block;
+}
+
+
+
+/* Details */
+
+img.eye {
+    position: absolute;
+    width: 100%;
+    max-width: 2em; /* Decreased eye image size */
+    top: 40%; /* Adjusted position */
+    left: 42%; /* Adjusted position */
+}
+
+@media (min-width:400px) {
+    img.eye {
+        max-width: 2.5em; /* Adjusted eye image size for larger screens */
+    }
+}
+
+.hero-image-container::after {
+    content: '';
+    background-image: url("https://i.postimg.cc/9MtT4GZY/view.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 5rem;
+    background-color: hsla(178, 100%, 50%, 0.3);
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.hero-image-container:hover::after {
+  opacity: 1;
+}
+
+.small-image {
+    width: 1.2em;
+    margin-right: .5em;
+}
+
+.small-avatar {
+    width: 2em;
+    border-radius: 200px;
+    outline: 2px solid white;
+    margin-right: 1.4em;
+}
+
+div.attribution {
+    margin: 0 auto;
+    width: 100%;
+    font: var(--var-para);
+    text-align: center;
+    padding: 1.5em 0 4em 0;
+    color: var(--var-line-dark);
+}
+.attribution a {
+    color: var(--var-soft-blue);
+}
+
+@media (min-width:600px) {
+    body {
+        font-size: 18px;
+    }
+}

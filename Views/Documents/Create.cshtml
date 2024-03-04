@@ -1,0 +1,115 @@
+@model DocuIns.Models.Documents.Document
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.977.0.min.js"></script>
+<link rel="=stylesheet" href="css/create.css">
+<body>
+
+    <h4>Create New Document</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create" method="POST" enctype="multipart/form-data" asp-controller="Documents">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Path" class="control-label"></label>
+                    <input asp-for="Path" name="file" type="file" id="file" class="form-control" />
+                    <span asp-validation-for="Path" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Tag" class="control-label"></label>
+                    <input asp-for="Tag" class="form-control" />
+                    <span asp-validation-for="Tag" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreatedDate" class="control-label"></label>
+                    <input asp-for="CreatedDate" class="form-control" />
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ModifiedDate" class="control-label"></label>
+                    <input asp-for="ModifiedDate" class="form-control" />
+                    <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.977.0.min.js"></script>
+
+    <script>
+        document.getElementById('fileInput').addEventListener("change", function () {
+            console.log('File selected', this.files[0]);
+            var file = this.files[0];
+            var bucketName = 'practicebucket-sahil';
+            var accessKeyId = 'AKIA2MBFTIOO7EIHIATA';
+            var secretAccessKey = 'e5JU63Joho+ulRDB5RVKEKn1LD2ofD5B38LLymNu';
+            var region = 'YOUR_AWS_REGION';
+
+            var s3 = new AWS.S3({
+                accessKeyId: accessKeyId,
+                secretAccessKey: secretAccessKey,
+                region: 'us-west-2'
+            });
+
+            var params = {
+                Bucket: bucketName,
+                Key: file.name,
+                Body: file
+            };
+
+            s3.upload(params, function (err, data) {
+                if (err) {
+                    console.log('Error is ', err);
+                } else {
+                    console.log('File uploaded successfully. Location:', data.Location);
+                    document.getElementById('filePathInput').value = data.Location;
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
